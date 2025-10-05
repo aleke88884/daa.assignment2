@@ -50,6 +50,62 @@ public class MajorityVoteAlgorithmTest {
         assertEquals(2, MajorityVoteAlgorithm.findMajority(arr, t).get(), "testMajority");
     }
 
+    private static void testNegativeNumbers() {
+        Integer[] arr = { -1, -1, 2, -1, 3, -1, -1 };
+        PerformanceTracker t = new PerformanceTracker();
+        assertEquals(-1, MajorityVoteAlgorithm.findMajority(arr, t).get(), "testNegativeNumbers");
+    }
+
+    private static void propertyBasedRandomTests() {
+        java.util.Random rand = new java.util.Random();
+
+        for (int i = 0; i < 100; i++) {
+            int size = 1000 + rand.nextInt(9000);
+            Integer[] arr = new Integer[size];
+            for (int j = 0; j < size; j++) {
+                arr[j] = rand.nextInt(100); // случайные значения 0..99
+            }
+
+            PerformanceTracker t = new PerformanceTracker();
+            var result = MajorityVoteAlgorithm.findMajority(arr, t);
+
+            // Проверяем свойство: если majority есть, его частота > size / 2
+            result.ifPresent(value -> {
+                long count = Arrays.stream(arr).filter(v -> v.equals(value)).count();
+                assertTrue(count > size / 2, "propertyBasedRandomTests-majorityValidation");
+            });
+        }
+
+        pass("propertyBasedRandomTests");
+    }
+
+    private static void crossValidateWithNaive() {
+        Integer[] arr = { 1, 2, 2, 3, 2, 2, 2, 4 };
+        PerformanceTracker t = new PerformanceTracker();
+        var result1 = MajorityVoteAlgorithm.findMajority(arr, t);
+        var result2 = naiveMajority(arr);
+
+        assertEquals(result2, result1, "crossValidateWithNaive");
+    }
+
+    private static java.util.Optional<Integer> naiveMajority(Integer[] arr) {
+        java.util.Map<Integer, Long> freq = new java.util.HashMap<>();
+        for (int v : arr)
+            freq.put(v, freq.getOrDefault(v, 0L) + 1);
+        int half = arr.length / 2;
+        return freq.entrySet().stream()
+                .filter(e -> e.getValue() > half)
+                .map(java.util.Map.Entry::getKey)
+                .findFirst();
+    }
+
+    private static void testLargeInputSameElement() {
+        Integer[] arr = new Integer[100000];
+        Arrays.fill(arr, 42);
+        PerformanceTracker t = new PerformanceTracker();
+        assertEquals(42, MajorityVoteAlgorithm.findMajority(arr, t).get(), "testLargeInputSameElement");
+    }
+
     private static void testNoMajority() {
         Integer[] arr = { 1, 2, 3, 2 };
         PerformanceTracker t = new PerformanceTracker();
