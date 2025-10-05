@@ -69,6 +69,8 @@ public class MajorityVoteAlgorithmTest {
             PerformanceTracker t = new PerformanceTracker();
             var result = MajorityVoteAlgorithm.findMajority(arr, t);
 
+
+            
             // Проверяем свойство: если majority есть, его частота > size / 2
             result.ifPresent(value -> {
                 long count = Arrays.stream(arr).filter(v -> v.equals(value)).count();
@@ -81,6 +83,7 @@ public class MajorityVoteAlgorithmTest {
 
     private static void crossValidateWithNaive() {
         Integer[] arr = { 1, 2, 2, 3, 2, 2, 2, 4 };
+
         PerformanceTracker t = new PerformanceTracker();
         var result1 = MajorityVoteAlgorithm.findMajority(arr, t);
         var result2 = naiveMajority(arr);
