@@ -88,6 +88,8 @@ public class MajorityVoteAlgorithmTest {
         assertEquals(result2, result1, "crossValidateWithNaive");
     }
 
+
+    
     private static java.util.Optional<Integer> naiveMajority(Integer[] arr) {
         java.util.Map<Integer, Long> freq = new java.util.HashMap<>();
         for (int v : arr)
