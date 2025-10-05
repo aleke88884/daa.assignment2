@@ -12,7 +12,11 @@ import src.main.java.metrics.CsvExporter.BenchmarkResult;
 import src.main.java.metrics.PerformanceTracker;
 
 /**
+ * 
+ * 
  * Command-line benchmark runner with configurable input sizes.
+ *
+ *
  */
 public class BenchmarkRunner {
 
@@ -25,6 +29,9 @@ public class BenchmarkRunner {
             runSingleBenchmark(config);
         }
     }
+
+
+
 
     private static void runSingleBenchmark(BenchmarkConfig config) {
         System.out.println("=== Single Benchmark Run ===");
@@ -88,9 +95,12 @@ public class BenchmarkRunner {
             arr[i] = r.nextInt(5);
         }
         return arr;
+    
+    
     }
 
     private static Integer[] majorityArray(int size) {
+
         Integer[] arr = new Integer[size];
         int majority = size / 2 + 1;
         for (int i = 0; i < majority; i++) {
