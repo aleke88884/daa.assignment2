@@ -99,6 +99,7 @@ public class MajorityVoteAlgorithmTest {
                 .findFirst();
     }
 
+
     private static void testLargeInputSameElement() {
         Integer[] arr = new Integer[100000];
         Arrays.fill(arr, 42);
